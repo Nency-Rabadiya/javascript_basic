@@ -54,7 +54,7 @@ console.log(points);
 */
 
 
-//-----------------SORTING-decending
+//-----------------SORTING-decending------------------//
 
 /*const points = [40, 100, 1, 5, 25, 10];
 points.sort(function(a, b){
@@ -74,7 +74,7 @@ console.log(minValue);
 console.log(maxValue);
 */
 
-//------------------OBJECT sorting
+//------------------OBJECT sorting---------------------//
 
 /*
 const cars = [
