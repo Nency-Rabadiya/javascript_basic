@@ -1,0 +1,33 @@
+<html>
+
+<body>
+  <h1>Display Data from API</h1>
+  <div id="apiDataDisplay"></div>
+  <script>
+    const apiUrl = "https://gist.githubusercontent.com/pandemonia/21703a6a303e0487a73b2610c8db41ab/raw/82e3ef99cde5b6e313922a5ccce7f38e17f790ac/twubric.json";
+    const apiDataDisplay = document.getElementById("apiDataDisplay");
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        data.forEach((item) => {
+          const userDataContainer = document.createElement("div");
+          const userInfo = document.createElement("p");
+          const joinDate = new Date(item.join_date * 1000);
+          userInfo.innerHTML = `UID: ${item.uid} , Username: ${item.username} , Fullname: ${item.fullname} , Joindate: ${joinDate.toDateString()}`;
+          userDataContainer.appendChild(userInfo);
+          if (item.image) {
+            const userImage = document.createElement("img");
+            userImage.src = item.image;
+            userImage.alt = "User Image";
+            userDataContainer.appendChild(userImage);
+          }
+          apiDataDisplay.appendChild(userDataContainer);
+        });
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  </script>
+</body>
+
+</html>
