@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Followers</title>
+</head>
+<style>
+  body {
+    background-color: #DDF2FD;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #3D3B40;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .grid-item {
+    border: 1px solid #9BBEC8;
+    text-align: center;
+  }
+
+  .item8 {
+    grid-column: 1 / span 3;
+  }
+
+  .item8 img {
+    grid-column: 1 / span 3;
+    max-width: 50%;
+    height: auto;
+    border-radius: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .item1 {
+    grid-column: span 2;
+  }
+
+  .item2 {
+    grid-column: 3;
+  }
+
+  .item3 {
+    grid-column: 1;
+  }
+
+  .item4 {
+    grid-column: 2;
+  }
+
+  .item5 {
+    grid-column: 3;
+  }
+
+  .item6 {
+    grid-column: 1;
+  }
+
+  .item7 {
+    grid-column: span 2;
+    padding-top: 30px;
+    padding-left: 450px;
+  }
+
+  .allDivData {
+    border: 1px solid #9BBEC8;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .mainDIV {
+    text-align: center;
+  }
+
+  button {
+    background-color: #427D9D;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+
+  button:hover {
+    background-color: #164863;
+  }
+
+  button:focus {
+    outline: none;
+    box-shadow: 0 0 5px #EEE7DA;
+  }
+</style>
+
+<body>
+  <div>
+    <div class="mainDIV">
+      <h2>Followers List</h2>
+      <div>
+        <h3>Sort By:</h3>
+        <button>Twubric Score</button>
+        <button>Friends</button>
+        <button>Influence</button>
+        <button>Chirpiness</button>
+      </div>
+      <br>
+      <div class="date-class">
+        <label for="startDate" class="date">Start Date:</label>
+        <input type="date" id="startDate" placeholder="YYYY-MM-DD">
+        <label for="endDate" class="date">End Date:</label>
+        <input type="date" id="endDate" placeholder="YYYY-MM-DD">
+      </div>
+      <br>
+    </div>
+    <div id="userContainer" class="allDivData"></div>
+  </div>
+  <script>
+    fetch('APITwuric.json')
+      .then(response => response.json())
+      .then(data => {
+        const users = data.users;
+        users.forEach(users => {
+          const htmlContent = `
+           <div class="container">
+            <br>
+              <div id="user1" class="allDivData">
+                <div class="image item8">
+                  <img src="${users.image}" alt="user1">
+                </div>
+                 <div class="grid-container">
+                  <div class="grid-item item1">${users.fullname}</div>
+                    <div class="grid-item item2">${users.twubric.total}</div>
+                      <div class="grid-item item3">
+                         <p>${users.twubric.friends}</p>
+                         <p>Friends</p>
+                     </div>
+                     <div class="grid-item item4">
+                         <p>${users.twubric.influence}</p>
+                         <p>Influence</p>
+                     </div>
+                      <div class="grid-item item5">
+                       <p>${users.twubric.chirpiness}</p>
+                       <p>Chirpiness</p>
+                      </div>
+                    <div class="grid-item item6">
+                      <p>Join Date: </p>
+                      <p>${new Date(users.join_date * 1000).toDateString()}</p>
+                    </div>
+                    <div class="grid-item item7">
+                      <button>Remove</button>
+                    </div>
+                </div>
+              </div>
+          `;
+          document.getElementById('userContainer').innerHTML += htmlContent;
+        });
+      })
+      .catch(error => console.error('Error fetching JSON:', error));
+  </script>
+</body>
+
+</html>
