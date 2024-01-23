@@ -1,4 +1,5 @@
 import class1 from './class.js';
+
 let text = "Visit W3Schools Visit";
 let pattern = /w3schools/i;
 //1
