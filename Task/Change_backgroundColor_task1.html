@@ -1,0 +1,39 @@
+<!-- ------------------- Program - Change background color with random number --------------- -->
+
+<html>
+
+<head>
+  <title>test1</title>
+</head>
+
+<body>
+  <div>
+    <button class="startBtn" onclick="changeBackgroundColor()">Start</button>
+    <button class="endBtn" onClick="whiteColor()">End</button>
+  </div>
+
+  <script>
+    function random() {
+      let seed = Date.now();
+      return function () {
+        seed = (seed ^ (seed << 13) ^ (seed >> 17)) & 0x7FFFFFFF;
+        return seed;
+      }
+    }
+
+    function changeBackgroundColor() {
+      const randomNumberGenerator = random();
+      const randomNum = randomNumberGenerator();
+      console.log(`Generated random number is ${randomNum}`);
+      const colorCode = '#' + (randomNum.toString() + '000000').slice(0, 6);
+      document.body.style.backgroundColor = colorCode;
+    }
+
+    function whiteColor() {
+      document.body.style.backgroundColor = '#FFFFFF';
+    }
+
+  </script>
+</body>
+
+</html>
