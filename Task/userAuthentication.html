@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task1</title>
+</head>
+
+<body>
+  usename : <input type="email" name="" id="eID" placeholder="Enter your email id ">
+  <br>
+  <br>
+  password : <input type="password" name="" id="pID" placeholder="Enter password">
+  <br>
+  <br>
+  <button type="submit" onclick="authenticate()">SUBMIT</button>
+
+  <script>
+    function authenticateUser(username, password) {
+      let promise = new Promise((resolve, reject) => {
+        if (username == "abcde@gmail.com" && password == "edcba@123") {
+          resolve("User is valid.")
+        } else {
+          reject("User not found");
+        }
+      });
+      return promise;
+    }
+
+    function authenticate() {
+      const username1 = document.getElementById('eID').value;
+      const password1 = document.getElementById('pID').value;
+
+      authenticateUser(username1, password1)
+        .then((result) => {
+          console.log(result);
+          document.location.replace('listTask.html');
+        }).catch((error) => {
+          console.log(error);
+        })
+    }
+  </script>
+</body>
+
+</html>
