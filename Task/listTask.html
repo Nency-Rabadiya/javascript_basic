@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" name="" id="taskText" placeholder="Add Task Here">
+  <button onclick="onAdd()">Add</button>
+  <ul>
+    <li id="Task"></li>
+  </ul>
+  <script>
+    const users = {
+      username: "abcde@gmail.com",
+      password: "edcba@123",
+      task: "xyzTask"
+    }
+
+    function fetchTasks() {
+      return new Promise((resolve, reject) => {
+        resolve(users);
+      });
+    }
+
+    fetchTasks()
+      .then((result) => {
+        console.log(result);
+        const taskList = document.getElementById("Task");
+        const listItem = document.createElement("li");
+        listItem.innerText = result.task;
+        taskList.appendChild(listItem);
+      })
+      .catch((error) => {
+        console.error("Error in fetching tasks:", error);
+      });
+
+    function onAdd() {
+      const text = document.getElementById("taskText").value;
+      function postData(data) {
+        return new Promise((resolve, reject) => {
+          const success = true;
+          if (success) {
+            resolve({ task: data });
+          } else {
+            reject('UNSUCCESSFUL');
+          }
+        });
+      }
+      postData(text)
+        .then((result) => {      //execute this if promise has been resolved.
+          console.log(result);
+          //Changes in UI and add data to list element
+          const responseList = document.getElementById('Task');
+          const responseItem = document.createElement('li');
+          responseItem.textContent = `${result.task}`;
+          responseList.appendChild(responseItem);
+        })
+        .catch((error) => {     //catch error if something wrong happens.
+          console.error(error);
+        });
+    }
+
+  </script>
+</body>
+
+</html>
