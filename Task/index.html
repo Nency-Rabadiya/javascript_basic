@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var userInputWindow = window.open("", "_blank", "width=300,height=150");
+    userInputWindow.document.write(`
+      <div id="inputPrompt">
+        <p>Please enter "yes" or "no":</p>
+        <form id="userInputForm">
+          <input type="text" id="userInput" name="userInput">
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    `);
+
+    function handleSubmit(event) {
+      var userInput = userInputWindow.document.getElementById("userInput").value.toLowerCase();
+      if (userInput === "yes" || userInput === "no") {
+        alert("You entered: " + userInput);
+      } else {
+        alert("Please enter either 'yes' or 'no'.");
+      }
+      userInputWindow.close();
+    }
+
+    userInputWindow.document.getElementById("userInputForm").addEventListener("submit", handleSubmit);
+    setTimeout(function () {
+      userInputWindow.close();
+    }, 5000);
+
+  </script>
+  <script src="asyncAwait.js"></script>
+</body>
+
+</html>
