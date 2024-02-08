@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class apiQueue {
+      constructor() {
+        this.queue = [];
+        this.isProcessing = false;
+      }
+
+      async handleUser(apiData) {
+        var userInputWindow = window.open("", "_blank", "width=300,height=150");
+        userInputWindow.document.write(`
+          <div id="inputPrompt">
+            <p>Please enter "yes" or "no":</p>
+            <form id="userInputForm">
+              <input type="text" id="userInput" name="userInput">
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        `);
+
+        userInputWindow.document.getElementById("userInputForm").addEventListener("submit", async (event) => {
+          event.preventDefault();
+          var userInput = userInputWindow.document.getElementById("userInput").value.toLowerCase();
+          if (userInput === "yes" || userInput === "no") {
+            alert("You entered: " + userInput);
+            if (userInput === "yes") {
+              await this.enqueue(apiData);
+            }
+          } else {
+            alert("Please enter either 'yes' or 'no'.");
+          }
+          userInputWindow.close();
+        });
+
+        setTimeout(function () {
+          userInputWindow.close();
+        }, 5000);
+      }
+
+      async enqueue(apiData) {
+        const process = async () => {
+          const response = await fetch(apiData);
+          if (!response.ok) {
+            throw new Error(`Error occur while fetching in ${apiData}`);
+          }
+          const data = await response.json();
+          console.log('data', data);
+          await this.handleUser(apiData); // Show prompt window again after fetching
+        }
+        this.queue.push(process);
+        console.log("push", this.queue);
+        await this.dequeue();
+      }
+
+      async dequeue() {
+        if (this.queue.length > 0 && !this.isProcessing) {
+          this.isProcessing = true;
+          const currentShift = this.queue[0];
+          try {
+            console.log("Data1", currentShift);
+            await currentShift();
+          }
+          catch (error) {
+            console.error("FAILED.", error);
+          }
+          finally {
+            this.queue.shift();
+            this.isProcessing = false;
+            console.log("dequeue", this.queue);
+            this.dequeue();
+          }
+        }
+        else {
+          console.log("Queue is empty or already processing.");
+        }
+      }
+    }
+
+    const apiList = new apiQueue();
+    apiList.handleUser('https://jsonplaceholder.typicode.com/todos/1');
+    apiList.handleUser('https://jsonplaceholder.typicode.com/todos/2');
+    apiList.handleUser('https://jsonplaceholder.typicode.com/todos/3');
+  </script>
+</body>
+
+</html>
