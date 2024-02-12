@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class apiQueue {
+      constructor() {
+        this.queue = [];
+        this.isProcessing = false;
+        this.urls = [];
+      }
+
+      async start() {
+        for (const api of this.urls) {
+          const userInput = await this.handleUser(api);
+          if (userInput === 'yes') {
+            try {
+              await this.enqueue(api);
+            } catch (error) {
+              console.error(error);
+            }
+          } else if (userInput === 'no') {
+            console.log("User Denied.");
+          }
+          else {
+            console.log('Please enter only "yes" or "no"');
+          }
+        }
+        await this.dequeue();
+      }
+
+      async handleUser(apiData) {
+        return new Promise((resolve, reject) => {
+          const userInputWindow = window.open("", "_blank", "width=300,height=150");
+          userInputWindow.document.write(`
+            <div id="inputPrompt">
+              <p>Do you want to add ${apiData} to the queue?</p>
+              <p>Please enter "yes" or "no":</p>
+              <form id="userInputForm">
+                <input type="text" id="userInput" name="userInput">
+                <button type="submit">Submit</button>
+              </form>
+            </div>
+          `);
+          userInputWindow.document.getElementById("userInputForm").addEventListener("submit", (event) => {
+            const userInput = userInputWindow.document.getElementById("userInput").value.toLowerCase();
+            userInputWindow.close();
+            resolve(userInput);
+          });
+
+          setTimeout(() => {
+            userInputWindow.close();
+          }, 5000);
+        });
+      }
+
+      async enqueue(apiData) {
+        return new Promise(async (resolve, reject) => {
+          const response = await fetch(apiData);
+          if (!response.ok) {
+            reject(`Error occur while fetching in ${apiData}`);
+            return;
+          }
+          const data = await response.json();
+          // console.log('Data', data);
+          this.queue.push(data); // Push the data into the queue
+          console.log('Enqueued:', data);
+          console.log('queue', this.queue);
+          resolve();
+        });
+      }
+
+      async dequeue() {
+        while (this.queue.length > 0) {
+          const currentData = this.queue.shift(); // Dequeue the first item from the queue
+          console.log('Dequeued:', currentData);
+          console.log('end queue', this.queue);
+        }
+        console.log("Queue is empty.");
+      }
+    }
+
+    const apiList = new apiQueue();
+    apiList.urls = [
+      'https://jsonplaceholder.typicode.com/todos/1',
+      '',
+      'https://jsonplaceholder.typicode.com/todos/2',
+      'https://jsonplaceholder.typicode.com/todos/3',
+    ];
+    apiList.start();
+  </script>
+</body>
+
+</html>
