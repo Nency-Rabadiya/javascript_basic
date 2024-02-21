@@ -1,0 +1,163 @@
+body {
+  font: "Arial", sans-serif;
+}
+
+#main-container {
+  background-color: #EEEDEB;
+  border-radius: 8px;
+  height: 617px;
+  width: 100%;
+  display: flex;
+  border: 1px solid white
+}
+
+.frontImage {
+  height: 94vh;
+  width: 45vw;
+  border-radius: 8px;
+  position: relative;
+  left: 12px;
+  top: 11px;
+}
+
+#second-container {
+  float: right;
+}
+
+#not-member {
+  position: relative;
+  left: 435px
+}
+
+a.register-link:hover {
+  color: #865fa9;
+}
+
+.hello-conatiner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 675px;
+  height: 45px;
+  /* border: 2px solid#865fa9; */
+}
+
+.welcomeback-conatiner {
+  /* border: 2px solid#865fa9; */
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.greet-container {
+  position: relative;
+  top: 70px;
+}
+
+.username {
+  position: relative;
+  top: 30px;
+  left: 160px;
+}
+
+.input-username {
+  height: 40px;
+  width: 360px;
+  border-radius: 5px;
+  align-items: center;
+  border-width: 0;
+}
+
+.input-password {
+  height: 40px;
+  width: 360px;
+  border-radius: 5px;
+  border-width: 0;
+  align-items: center;
+}
+
+.button-container {
+  position: absolute;
+  top: 250px;
+  left: 165px;
+  height: 40px;
+  width: 360px;
+  background-color: tomato;
+  border-width: 0;
+  border-radius: 4px;
+  color: white;
+}
+
+button:hover {
+  background-color: rgb(99, 21, 7);
+}
+
+.form {
+  display: grid;
+  row-gap: 10px;
+}
+
+.eye-icon {
+  position: relative;
+  right: 35px;
+  top: 8px;
+}
+
+.password {
+  position: absolute;
+  left: 400px;
+  top: 200px;
+}
+
+
+.line:before {
+  content: " ";
+  display: block;
+  height: 2px;
+  width: 100px;
+  position: absolute;
+  top: 9px;
+  left: -102px;
+  background: white;
+}
+
+.line:after {
+  content: " ";
+  display: block;
+  height: 2px;
+  width: 100px;
+  position: absolute;
+  top: 9px;
+  left: 111px;
+  background: white;
+}
+
+.line {
+  position: absolute;
+  top: 300px;
+  left: 290px;
+  color: grey;
+}
+
+#logos {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  position: absolute;
+  gap: 50px;
+  top: 480px;
+  left: 800px;
+}
+
+.logo-container {
+  border: 1px solid white;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  width: 50px;
+}
+
+.logo-container:hover {
+  background-color: white;
+}
