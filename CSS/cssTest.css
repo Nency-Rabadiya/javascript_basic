@@ -1,0 +1,138 @@
+* {
+  margin: 0%;
+}
+
+body {
+  border: 1px solid red;
+}
+
+/* Element selector  */
+h3 {
+  color: brown;
+}
+
+/* Class selector  */
+.classSelect {
+  text-align: center;
+  border: 1px solid black;
+}
+
+.classSelect1 {
+  background-color: cadetblue;
+}
+
+/* Id selector  */
+#idSelect {
+  font-size: 20px;
+}
+
+/* Descent selecor */
+div p {
+  background-color: #9AD0C2;
+}
+
+a:visited {
+  color: black;
+}
+
+a.link:hover {
+  color: green;
+}
+
+a:active {
+  color: blue;
+}
+
+/* Box Model */
+#boxModel {
+  padding: 20px;
+  margin: 10px 30px 10px 20px;
+  border: 1px solid black;
+  background-color: #9AD0C2;
+}
+
+/* property use */
+.property {
+  text-align: right;
+  text-decoration: overline;
+  letter-spacing: 5px;
+  word-spacing: 15px;
+  text-shadow: 2px 2px 2px crimson;
+  font-style: italic;
+}
+
+/* Display properties */
+span {
+  height: 161px;
+  display: inline-block;
+  width: 221px;
+  background-color: beige;
+  border: 1px solid black;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
+  height: 500px;
+  width: 100%;
+}
+
+.item {
+  height: 75px;
+  width: 700px;
+  background-color: blueviolet;
+  border: 1px solid black;
+}
+
+#flex-item1 {
+  background-color: pink;
+}
+
+#flex-item2 {
+  background-color: plum;
+}
+
+#flex-item3 {
+  background-color: purple;
+}
+
+#flex-item4 {
+  background-color: palevioletred;
+}
+
+#image1 {
+  position: relative;
+  top: 100px;
+}
+
+#image2 {
+  position: absolute;
+  left: 500px;
+}
+
+#image3 {
+  position: sticky;
+  top: 300px;
+}
+
+#image4 {
+  position: fixed;
+}
+
+.float {
+  float: right;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 2px;
+  row-gap: 2px;
+}
+
+.grid-item {
+  border: 1px solid black;
+  text-align: center;
+}
