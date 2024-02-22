@@ -15,7 +15,63 @@
         background-color: beige;
         border: 1px solid black;
       }
+    }
+    .ani-container {
+      background-color: aliceblue; 
+    }
 
+    .ani-item {
+      background-color: #3E3232;
+      height: 200px;
+      width: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 100px;
+      animation-name: round;
+      animation-duration: 5s;
+      animation-iteration-count: infinite;
+      position: relative;
+      animation-delay: 2s;
+    }
+
+    @keyframes round {
+      0%{
+        top : 0px;
+        left : 0px;
+        background-color: #3E3232 ;
+        transform: rotate(0deg);
+      }
+      20%{
+        top : 0px;
+        left : 250px;
+        background-color: #503C3C;
+        transform: rotate(90deg);
+      }
+      40%{
+        top : 0px;
+        left : 550px;
+        background-color: #7E6363;
+        transform: rotate(160deg);
+      }
+      60%{
+        top : 0px;
+        left : 750px;
+        background-color: #A87C7C ;
+        transform: rotate(220deg);
+      }
+      80%{
+        top : 0px;
+        left : 950px;
+        background-color: #B47B84 ;
+        transform: rotate(280deg);
+      }
+      100%{
+        top : 0px;
+        left : 1050px;
+        background-color: #FFE7E7;
+        transform: rotate(360deg);
+      }
     }
   </style>
 </head>
@@ -81,7 +137,9 @@
     <div class="grid-item">8</div>
     <div class="grid-item">9</div>
   </div>
-
+  <div class="ani-container">
+    <div class="ani-item">Round</div>
+  </div>
 </body>
 
 </html>
