@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up Page</title>
+  <style>
+    .hello-conatiner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 675px;
+      height: 45px;
+      /* border: 2px solid#865fa9; */
+    }
+
+    .greet-container {
+      position: relative;
+      top: 70px;
+    }
+
+    .userdata {
+      position: relative;
+      top: 30px;
+      left: 160px;
+    }
+
+    .input-username {
+      height: 40px;
+      width: 360px;
+      border-radius: 5px;
+      align-items: center;
+      border-width: 0;
+    }
+
+    .input-password {
+      height: 40px;
+      width: 360px;
+      border-radius: 5px;
+      border-width: 0;
+      align-items: center;
+    }
+
+    .button-container {
+      position: absolute;
+      top: 365px;
+      left: 165px;
+      height: 40px;
+      width: 360px;
+      background-color: tomato;
+      border-width: 0;
+      border-radius: 4px;
+      color: white;
+    }
+
+    button:hover {
+      background-color: rgb(99, 21, 7);
+    }
+
+    .form {
+      display: grid;
+      row-gap: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-conatiner">
+    <div class="greet-container">
+      <div class="hello-conatiner">
+        <h2>Hello Again!</h2>
+      </div>
+      <form id="signupForm">
+        <div class="form">
+          <div class="userdata">
+            <input type="text" placeholder="   Enter username" class="input-username" id="username" required>
+          </div>
+          <div class="userdata">
+            <input type="text" placeholder="   Enter email" class="input-username" id="email" required>
+          </div>
+          <div class="userdata">
+            <input type="password" placeholder="   Enter password" class="input-password" id="password" required>
+          </div>
+          <div class="userdata">
+            <input type="password" placeholder="   Re-enter password" class="input-username" id="re-password" required>
+          </div>
+        </div>
+    </div>
+    <div>
+      <button type="submit" class="button-container">Sign Up</button>
+    </div>
+    </form>
+  </div>
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent the default form submission
+      const password = document.getElementById("password").value;
+      const email = document.getElementById("email").value;
+      const rePassword = document.getElementById("re-password").value;
+      const username = document.getElementById("username").value;
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const nameRegex = /^[a-zA-Z0-9]+$/;
+
+      if (!email) {
+        console.log("Please enter email");
+        return;
+      }
+      if (!username) {
+        console.log("Please enter username");
+        return;
+      }
+      if (!password) {
+        console.log("Please enter your password");
+        return;
+      }
+      if (!rePassword) {
+        console.log("Please re-enter your password");
+        return;
+      }
+      if (password !== rePassword) {
+        alert("Password does not match");
+        return;
+      }
+
+      if (!emailRegex.test(email)) {
+        alert("Invalid email format");
+        return;
+      }
+
+      if (!nameRegex.test(username)) {
+        alert("Invalid username. Please use only letters and numbers.");
+        return;
+      }
+
+      const formData = {
+        username: username,
+        email: email,
+        password: password,
+      };
+
+      fetch("http://localhost:8000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Handle the successful response
+          console.log("success");
+          console.log(data);
+          window.location.href = "successPage.html";
+        })
+        .catch((error) => {
+          // Handle errors during the fetch request
+          console.error("Fetch error:", error);
+        });
+    });
+  </script>
+
+</body>
+
+</html>

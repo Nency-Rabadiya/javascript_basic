@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In Page</title>
+  <style>
+    .hello-conatiner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 675px;
+      height: 45px;
+    }
+
+    .greet-container {
+      position: relative;
+      top: 70px;
+    }
+
+    .username {
+      position: relative;
+      top: 30px;
+      left: 160px;
+    }
+
+    .input-username {
+      height: 40px;
+      width: 360px;
+      border-radius: 5px;
+      align-items: center;
+      border-width: 0;
+    }
+
+    .input-password {
+      height: 40px;
+      width: 360px;
+      border-radius: 5px;
+      border-width: 0;
+      align-items: center;
+    }
+
+    #not-member {
+      position: relative;
+      top: 20px;
+      left: 320px
+    }
+
+    .button-container {
+      position: absolute;
+      top: 200px;
+      left: 165px;
+      height: 40px;
+      width: 360px;
+      background-color: tomato;
+      border-width: 0;
+      border-radius: 4px;
+      color: white;
+    }
+
+    button:hover {
+      background-color: rgb(99, 21, 7);
+    }
+
+    .form {
+      display: grid;
+      row-gap: 10px;
+    }
+  </style>
+</head>
+
+
+<body>
+  <div class="main-conatiner">
+    <div class="greet-container">
+      <div class="hello-conatiner">
+        <h2>Hello Again!</h2>
+      </div>
+      <div class="form">
+        <div class="username">
+          <input type="text" placeholder="   Enter username" class="input-username" id="username" required>
+        </div>
+        <div class="username">
+          <input type="password" placeholder="   Enter password" class="input-password" id="password" required>
+        </div>
+      </div>
+      <div id="not-member">
+        <p>Not a member? <a class="register-link" href="employeeSignUP.html">Sign Up here</a></p>
+      </div>
+      <div>
+        <button type="button" class="button-container" onclick="validation()">Sign In</button>
+      </div>
+    </div>
+    <script src="logInScript.js"></script>
+</body>
+
+</html>
