@@ -1,5 +1,7 @@
 const http = require("http");
-const user = [{ username: "nency" }];
+const users = [{
+  username: "nency", password: '123456789', email: "nency@gmail.com"
+}];
 const server = http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   if (req.method === "OPTIONS") {
@@ -10,39 +12,64 @@ const server = http.createServer((req, res) => {
     res.end();
     return;
   }
-  if (req.method === "POST" && req.url === "/signup") {
-    let body = "";
+  // Parse the request URL
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  // Check the path of the URL and handle different routes
+  if (url.pathname === "/") {
+    if (req.method === "GET") {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(users));
+    }
+    // Handle the root route
+    else if (req.url.pathname === "/login" && req.method === "POST") {
+      let body = '';
+      req.on('data', userData => {
+        body += userData.toString();
+      });
+      req.on('end', () => {
+        const userData = JSON.parse(body);
 
-    // Listen for data events to accumulate the POST data
-    req.on("data", (chunk) => {
-      body += chunk.toString();
+        const getUser = users.find(
+          u => u.username === userData.username && u.password === userData.password
+        );
+        if (getUser) {
+          res.writeHead(200, { "Location": "/success.html" });
+          res.end(JSON.stringify({ success: true, message: "Login successful" }));
+        } else {
+          res.writeHead(401, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ message: "Invalid credentials" }));
+        }
+      });
+    }
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify(users));
+  } else if (req.method === "POST" && req.url === "/signup") {
+    let body = '';
+    req.on('data', userData => {
+      body += userData.toString();
     });
-
-    // Listen for the end event to process the entire data
-    req.on("end", () => {
-      // At this point, 'body' contains the complete POST data
-
-      console.log("Received data:", body);
+    req.on('end', () => {
       const newUser = JSON.parse(body);
-      user.push(body);
-      res.writeHead(201, { "Content-Type": "application/json" });
-      res.end(JSON.stringify(newUser));
-      // You can process the data further, e.g., save it to a database
-
-      // Send a response to the client
-      res.writeHead(200, { "Content-Type": "text/plain" });
-      res.end("Data received successfully!");
+      users.push(newUser);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      console.log('JSON.stringify(newUser)...', JSON.stringify(newUser));
+      // res.end(JSON.stringify({ success: true, message: "sign up successful" }));
+      // res.end(JSON.stringify(newUser));
     });
-  } else {
-    // Handle other requests or routes
+  }
+  else if (req.method === "GET" && req.url === "/getdata") {
+    res.writeHead(200, { "Content-Type": "application/json" })
+    res.end(JSON.stringify(signUpData))
+  }
+  else {
+    // Handle unknown routes
     res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("Not Found");
+    res.end("404 Not Found\n");
   }
 });
 
 const PORT = 8000;
-
 server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 

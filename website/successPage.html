@@ -4,11 +4,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Display employee</title>
 </head>
 
 <body>
   <h1>SUCCESS</h1>
+  <table id="displaydata">
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+  </table>
+  
+  <button onclick="addEmployee()">Add employee</button>
+  <button>Edit employee</button>
+  <button onclick="redirectLogIn()">Log Out</button>
+  <script>
+    function redirectLogIn() {
+      window.location.href = "employeeLogIn.html";
+    }
+
+    function addEmployee() {
+      var userInputWindow = window.open("", "_blank", "width=500 , height=500");
+      userInputWindow.document.write(`
+                                                      <div id="main-container">
+                                                        <p>Enter details</p>
+                                                        <form id="add-employee">
+                                                          <input type="text" id="name"  placeholder="Enter username">
+                                                          <input type="text" id="email"  placeholder="Enter email">
+                                                          <button type="submit">Submit</button>
+                                                        </form>
+                                                      </div>
+                                                    `);
+      userInputWindow.document.getElementById("add-employee").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const name = userInputWindow.document.getElementById("name").value;
+        const email = userInputWindow.document.getElementById("email").value;
+
+        // Update the table cells with the new data
+        const userdataTable = document.getElementById("displaydata");
+        const row = document.createElement("tr");
+        row.innerHTML = `
+                                                <td>${name}</td>
+                                                <td>${email}</td>
+                                                <td><button onclick="deleteRow(this)">Delete</button></td>
+                                              `;
+        userdataTable.appendChild(row);
+        // const formData = { username: userInputWindow.document.getElementById("name").value, email: userInputWindow.document.getElementById("email").value };
+        // fetch("http://localhost:8000/signup", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify(formData),
+        // })
+        //   .then((response) => {
+
+        //     if (!response.ok) {
+        //       throw new Error(`HTTP error! Status: ${response.status}`);
+        //     }
+        //     return response.json();
+        //   })
+        //   .then((data) => {
+        //     // Handle the successful response
+        //     console.log("success");
+        //     console.log(data);
+        //   })
+        //   .catch((error) => {
+        //     // Handle errors during the fetch request
+        //     console.error("Fetch error:", error);
+        //   });
+        userInputWindow.close();
+      });
+    }
+
+    function deleteRow(button) {
+      // Find the row and delete it
+      const row = button.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+    }
+
+  </script>
 </body>
 
 </html>
