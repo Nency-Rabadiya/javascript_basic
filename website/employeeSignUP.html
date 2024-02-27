@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up Page</title>
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
     .hello-conatiner {
       display: flex;
       justify-content: center;
@@ -88,13 +93,14 @@
         </div>
     </div>
     <div>
-      <button type="submit" class="button-container">Sign Up</button>
+      <button type="button" onclick="return signUp()" class="button-container">Sign Up</button>
     </div>
     </form>
   </div>
   <script>
-    document.getElementById("signupForm").addEventListener("submit", function (event) {
-      event.preventDefault(); // Prevent the default form submission
+
+
+  function signUp() {
       const password = document.getElementById("password").value;
       const email = document.getElementById("email").value;
       const rePassword = document.getElementById("re-password").value;
@@ -149,22 +155,26 @@
       })
 
         .then((response) => {
-          if (!response.success) {
+          if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           return response.json();
         })
         .then((data) => {
           // Handle the successful response
+          alert(data.message);
+          window.location.href = "successPage.html";
           console.log("success");
           console.log(data);
-          window.location.href = "successPage.html";
+
         })
         .catch((error) => {
           // Handle errors during the fetch request
           console.error("Fetch error:", error);
         });
-    });
+            }
+
+            //});
   </script>
 
 </body>
