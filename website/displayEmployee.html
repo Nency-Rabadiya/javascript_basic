@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Display employee</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    table {
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: tomato;
+      color: white;
+    }
+
+    button:hover {
+      background-color: rgb(99, 21, 7);
+    }
+
+    #main-container {
+      width: 500px;
+      margin: 20px auto;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    button[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    #logout-button {
+      position: absolute;
+      top: 7px;
+      right: 0;
+    }
+
+    #add-employee {
+      position: absolute;
+      top: 15px;
+      left: 150px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Employee Data</h1>
+  <button id="add-employee" onclick="addEmployee()">Add employee</button>
+  <button id="logout-button" onclick="redirectLogIn()">Log Out</button>
+  <table id="displaydata">
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+  </table>
+  <script>
+    function redirectLogIn() {
+      window.location.href = "employeeLogIn.html";
+    }
+
+    function addEmployee() {
+      var userInputWindow = window.open("", "_blank", "width=500 , height=300");
+      userInputWindow.document.write(`
+      <style>
+  #main-container p {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  #add-employee input[type="text"], #add-employee button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+
+  #add-employee button {
+    background-color: tomato;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  #add-employee button:hover {
+    background-color: rgb(99, 21, 7);
+  }
+</style>
+    <div id="main-container">
+      <p>Enter details</p>
+     <form id="add-employee">
+        <input type="text" id="name"  placeholder="Enter username">
+        <input type="text" id="email"  placeholder="Enter email">
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+                                                    `);
+      userInputWindow.document.getElementById("add-employee").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const name = userInputWindow.document.getElementById("name").value;
+        const email = userInputWindow.document.getElementById("email").value;
+
+        // Update the table cells with the new data
+        const userdataTable = document.getElementById("displaydata");
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${name}</td>
+          <td>${email}</td>
+          <td><button onclick="deleteRow(this)">Delete</button><button onclick="editRow(this)">Edit</button></td>
+            `;
+        // userdataTable.appendChild(row);
+
+        const formData = {
+          username: userInputWindow.document.getElementById("name").value,
+          email: userInputWindow.document.getElementById("email").value
+        };
+
+        fetch("http://localhost:8000/addemployee", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        })
+          .then((response) => {
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Handle the successful response
+            alert(data.message);
+            userdataTable.appendChild(row);
+            console.log("success");
+            console.log(data);
+          })
+          .catch((error) => {
+            // Handle errors during the fetch request
+            console.error("Fetch error:", error);
+          });
+        userInputWindow.close();
+      });
+    }
+
+    function deleteRow(button) {
+      // Find the row and delete it
+      const row = button.parentNode.parentNode;
+      // row.parentNode.removeChild(row);
+      const username = row.cells[0].textContent;
+      console.log(username);
+      const email = row.cells[1].textContent;
+      console.log(email);
+      const formData = { username, email };
+
+      fetch("http://localhost:8000/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Handle the successful response
+          alert(data.message);
+          row.parentNode.removeChild(row);
+          console.log("success");
+          console.log(data);
+        })
+        .catch((error) => {
+          // Handle errors during the fetch request
+          console.error("Fetch error:", error);
+        });
+    }
+
+    function editRow(button) {
+      const row = button.closest("tr");
+      const username = row.cells[0].textContent;
+      const email = row.cells[1].textContent;
+
+      var editInputWindow = window.open("", "_blank", "width=500 , height=300");
+      editInputWindow.document.write(`
+  <style>
+  #main-container p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  #edit-employee input[type="text"], #edit-employee button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  #edit-employee button {
+    background-color: tomato;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #edit-employee button:hover {
+    background-color: rgb(99, 21, 7);
+  }
+</style>
+
+    <div id="main-container">
+      <p>Edit details</p>
+      <form id="edit-employee">
+        <input type="text" id="edit-name" value="${username}">
+        <input type="text" id="edit-email" value="${email}">
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  `);
+      editInputWindow.document.getElementById("edit-employee").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const editedName = editInputWindow.document.getElementById("edit-name").value;
+        const editedEmail = editInputWindow.document.getElementById("edit-email").value;
+
+        // row.cells[0].textContent = editedName;
+        // row.cells[1].textContent = editedEmail;
+
+        const formData = {
+          username: editedName,
+          email: editedEmail
+        };
+
+        fetch("http://localhost:8000/edit", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            alert(data.message);
+            row.cells[0].textContent = editedName;
+            row.cells[1].textContent = editedEmail;
+            console.log("success");
+            console.log(data);
+          })
+          .catch((error) => {
+            console.error("Fetch error:", error);
+          });
+
+        editInputWindow.close();
+      });
+    }
+
+  </script>
+</body>
+
+</html>
