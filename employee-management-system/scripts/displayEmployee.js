@@ -20,7 +20,6 @@ export function addEmployee() {
     const name = userInputWindow.document.getElementById("name").value;
     const email = userInputWindow.document.getElementById("email").value;
 
-    // Update the table cells with the new data
     const userdataTable = document.getElementById("displaydata");
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -63,9 +62,8 @@ export function addEmployee() {
 }
 
 export function deleteRow(button) {
-  // Find the row and delete it
+
   const row = button.parentNode.parentNode;
-  // row.parentNode.removeChild(row);
   const username = row.cells[0].textContent;
   console.log(username);
   const email = row.cells[1].textContent;
@@ -93,7 +91,6 @@ export function deleteRow(button) {
       console.log(data);
     })
     .catch((error) => {
-      // Handle errors during the fetch request
       console.error("Fetch error:", error);
     });
 }
