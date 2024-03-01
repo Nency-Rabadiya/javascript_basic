@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up Page</title>
+  <link rel="stylesheet" href="./styles/signUp.css">
+  <link rel="icon" href="./icons/employees.png" type="image/x-icon">
+  <link rel="shortcut icon" href="./icons/employees.png" type="image/x-icon">
+</head>
+
+<body>
+  <div class="main-conatiner">
+    <div class="greet-container">
+      <div class="hello-conatiner">
+        <h2>Hello Again!</h2>
+      </div>
+      <form id="signupForm">
+        <div class="form">
+          <div class="userdata">
+            <input type="text" placeholder="Enter username" class="input-username" id="username" required>
+          </div>
+          <div class="userdata">
+            <input type="text" placeholder="Enter email" class="input-username" id="email" required>
+          </div>
+          <div class="userdata">
+            <input type="password" placeholder="Enter password" class="input-password" id="password" required>
+          </div>
+          <div class="userdata">
+            <input type="password" placeholder="Re-enter password" class="input-username" id="re-password" required>
+          </div>
+        </div>
+    </div>
+    <div>
+      <button type="button" onclick="signUp()" class="button-container">Sign Up</button>
+    </div>
+    </form>
+  </div>
+<script src="./scripts/signUp.js"></script>
+</body>
+
+</html>

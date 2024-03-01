@@ -1,0 +1,66 @@
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .hello-conatiner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 675px;
+      height: 45px;
+    }
+
+    .greet-container {
+      position: relative;
+      top: 70px;
+    }
+
+    .username {
+      position: relative;
+      top: 30px;
+      left: 160px;
+    }
+
+    .input-username {
+      height: 40px;
+      width: 360px;
+      border-radius: 5px;
+      align-items: center;
+      border-width: 0;
+    }
+
+    .input-password {
+      height: 40px;
+      width: 360px;
+      border-radius: 5px;
+      border-width: 0;
+      align-items: center;
+    }
+
+    #not-member {
+      position: relative;
+      top: 20px;
+      left: 320px
+    }
+
+    .button-container {
+      position: absolute;
+      top: 200px;
+      left: 165px;
+      height: 40px;
+      width: 360px;
+      background-color: tomato;
+      border-width: 0;
+      border-radius: 4px;
+      color: white;
+    }
+
+    button:hover {
+      background-color: rgb(99, 21, 7);
+    }
+
+    .form {
+      display: grid;
+      row-gap: 10px;
+    }

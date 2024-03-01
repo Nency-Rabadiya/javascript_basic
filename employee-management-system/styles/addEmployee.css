@@ -1,0 +1,22 @@
+#main-container p {
+  font-weight: bold;
+  margin-bottom: 10px;
+  }
+  
+  #add-employee input[type="text"], #add-employee button {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  }
+  
+  #add-employee button {
+  background-color: tomato;
+  color: white;
+  border: none;
+  cursor: pointer;
+  }
+  
+  #add-employee button:hover {
+  background-color: rgb(99, 21, 7);
+  }

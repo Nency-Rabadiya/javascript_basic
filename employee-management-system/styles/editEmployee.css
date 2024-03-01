@@ -1,0 +1,25 @@
+#main-container p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  }
+  
+  #edit-employee input[type="text"], #edit-employee button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  }
+  
+  #edit-employee button {
+  background-color: tomato;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  }
+  
+  #edit-employee button:hover {
+  background-color: rgb(99, 21, 7);
+  }
