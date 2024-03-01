@@ -1,8 +1,8 @@
-export function redirectLogIn() {
+function redirectLogIn() {
   window.location.href = "../logIn.html";
 }
 
-export function addEmployee() {
+function addEmployee() {
   var userInputWindow = window.open("", "_blank", "width=500 , height=300");
   userInputWindow.document.write(`
         <link rel="stylesheet" href="./styles/addEmployee.css">
@@ -61,7 +61,7 @@ export function addEmployee() {
   });
 }
 
-export function deleteRow(button) {
+function deleteRow(button) {
 
   const row = button.parentNode.parentNode;
   const username = row.cells[0].textContent;
@@ -95,7 +95,7 @@ export function deleteRow(button) {
     });
 }
 
-export function editRow(button) {
+function editRow(button) {
   const row = button.closest("tr");
   const username = row.cells[0].textContent;
   const email = row.cells[1].textContent;
